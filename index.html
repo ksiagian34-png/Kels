@@ -7,36 +7,33 @@
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #2f4f88;
-  color: white;
-  text-align: center;
+    margin:0;
+    font-family: Arial;
+    background:#2e4c7e;
+    color:white;
+    text-align:center;
 }
 
 .container {
-  padding: 40px 20px;
+    padding:40px 20px;
 }
 
 h1 {
-  font-size: 28px;
+    font-size:30px;
 }
 
 .btn {
-  background: #00e0b8;
-  color: black;
-  padding: 15px 25px;
-  border-radius: 10px;
-  font-size: 18px;
-  border: none;
-  cursor: pointer;
-  margin-top: 20px;
+    background:#00d4aa;
+    padding:15px 25px;
+    border-radius:10px;
+    color:black;
+    font-weight:bold;
+    border:none;
+    margin-top:20px;
 }
 
 .note {
-  margin-top: 15px;
-  font-size: 14px;
-  opacity: 0.8;
+    margin-top:15px;
 }
 </style>
 </head>
@@ -44,33 +41,30 @@ h1 {
 <body>
 
 <div class="container">
+    <h1>🤖 AI CONTROL SYSTEM</h1>
+    <p>Tool Termux Multifungsi</p>
 
-<h1>🤖 AI CONTROL SYSTEM</h1>
-<p>Tool Termux Multifungsi</p>
+    <p>🔥 Fitur:</p>
+    <p>AI • Booster • Launcher • Tracking • Admin Panel</p>
 
-<p>🔥 Fitur:</p>
-<p>AI • Booster • Launcher • Tracking • Admin Panel</p>
+    <button class="btn" onclick="install()">📥 Install Sekarang</button>
 
-<button class="btn" onclick="install()">📥 Install Sekarang</button>
-
-<p class="note" id="status">✔ Siap digunakan</p>
-
-<p style="opacity:0.6;font-size:12px;">Version 2 • Updated</p>
-
+    <p class="note" id="status">✔ Siap digunakan</p>
 </div>
 
 <script>
 function install() {
-  const cmd = "pkg update -y && pkg install curl -y && bash <(curl -s https://raw.githubusercontent.com/ksiagian34-png/Kels/main/install-online.sh)";
 
-  navigator.clipboard.writeText(cmd).then(() => {
-    document.getElementById("status").innerText = "✔ Command disalin!";
-  }).catch(() => {
-    document.getElementById("status").innerText = "❌ Gagal copy, copy manual!";
-  });
+    const cmd = "pkg update -y && pkg upgrade -y && pkg install git -y && pkg install curl -y";
 
-  // buka Termux (opsional)
-  window.location.href = "termux://";
+    navigator.clipboard.writeText(cmd).then(() => {
+        document.getElementById("status").innerText = "✔ Command disalin! Buka Termux & paste";
+    }).catch(() => {
+        document.getElementById("status").innerText = "❌ Gagal copy, copy manual!";
+    });
+
+    // buka termux (opsional, kadang tidak jalan di browser biasa)
+    window.location.href = "termux://";
 }
 </script>
 
