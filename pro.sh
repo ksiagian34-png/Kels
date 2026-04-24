@@ -7,94 +7,142 @@ TOKEN_FILE="$HOME/token.txt"
 banner(){
 clear
 echo "=============================="
-echo " 🤖 AI CONTROL SYSTEM v16"
+echo " 🤖 AI CONTROL SYSTEM v17 PRO"
 echo "=============================="
 }
 
 pause(){ read -p "ENTER..."; }
 
-# ===== GENERATE TOKEN =====
+# ===== TOKEN =====
 generate_token(){
 token=$(date +%s | sha256sum | head -c 6)
 echo "$token" > "$TOKEN_FILE"
-echo "🔐 TOKEN ANDA: $token"
-echo "Berikan token ini ke ADMIN"
+echo "🔐 TOKEN: $token"
 }
 
-# ===== VALIDASI TOKEN =====
 check_token(){
 read -p "Masukkan token: " t
 saved=$(cat "$TOKEN_FILE" 2>/dev/null)
 
-if [ "$t" = "$saved" ]; then
-  echo "✔ Akses diberikan"
-  return 0
-else
-  echo "❌ Token salah"
-  return 1
-fi
+[ "$t" = "$saved" ] && return 0 || return 1
 }
 
-# ===== FITUR =====
-alarm_hp(){
+# ===== SYSTEM =====
+boost(){
+echo "⚡ Boost..."
+sync
+rm -rf ~/.cache/* 2>/dev/null
+echo "✔ Done"
+}
+
+# ===== AI =====
+ai(){
+case "$1" in
+*halo*) echo "Halo 👋";;
+*game*) echo "FF, ML, PUBG siap 🎮";;
+*) echo "AI: $1";;
+esac
+}
+
+ai_chat(){
 while true; do
-termux-tts-speak "Perangkat ditemukan!" 2>/dev/null
-sleep 2
+read -p "> " i
+[ "$i" = "exit" ] && break
+ai "$i"
 done
 }
 
-ambil_foto(){
-file="$HOME/foto.jpg"
-termux-camera-photo "$file" 2>/dev/null
-echo "✔ Foto: $file"
+# ===== APP =====
+open_app(){
+monkey -p "$1" 1 >/dev/null 2>&1 && echo "✔ Dibuka" || echo "❌ Tidak ada"
 }
 
-get_location(){
-termux-location 2>/dev/null || echo "❌ Gagal"
-}
-
-# ===== CLIENT MODE =====
-client_mode(){
-banner
-echo "📱 MODE PERANGKAT"
-echo "1. Aktifkan Tracking (generate token)"
-echo "2. Kirim Lokasi"
-echo "3. Ambil Foto"
-echo "0. Kembali"
-
-read -p "Pilih: " c
-
-case "$c" in
-1) generate_token ;;
-2) get_location ;;
-3) ambil_foto ;;
-esac
-
-pause
-}
-
-# ===== ADMIN PANEL =====
-admin_panel(){
-
-banner
-echo "🔐 ADMIN PANEL"
-echo "Masukkan token target"
-
-check_token || return
-
+menu_app(){
 while true; do
-echo ""
-echo "1. 📍 Lihat Lokasi"
-echo "2. 📸 Ambil Foto"
-echo "3. 🔊 Bunyi Alarm"
+banner
+echo "🎮 APP MENU"
+echo "1. Free Fire"
+echo "2. Mobile Legends"
+echo "3. PUBG"
+echo "4. TikTok"
+echo "5. Instagram"
+echo "6. YouTube"
 echo "0. Kembali"
 
 read -p "Pilih: " a
 
 case "$a" in
-1) get_location ;;
-2) ambil_foto ;;
-3) alarm_hp ;;
+1) boost; open_app com.dts.freefireth ;;
+2) boost; open_app com.mobile.legends ;;
+3) boost; open_app com.tencent.ig ;;
+4) open_app com.zhiliaoapp.musically ;;
+5) open_app com.instagram.android ;;
+6) open_app com.google.android.youtube ;;
+0) break ;;
+esac
+
+done
+}
+
+# ===== TRACKING =====
+lokasi(){ termux-location 2>/dev/null; }
+
+foto(){
+file="$HOME/foto.jpg"
+termux-camera-photo "$file" 2>/dev/null
+echo "✔ $file"
+}
+
+alarm(){
+while true; do
+termux-tts-speak "Perangkat ditemukan" 2>/dev/null
+sleep 2
+done
+}
+
+# ===== CLIENT =====
+client(){
+while true; do
+banner
+echo "📱 CLIENT"
+echo "1. Generate Token"
+echo "2. Lokasi"
+echo "3. Foto"
+echo "0. Back"
+
+read -p "Pilih: " c
+
+case "$c" in
+1) generate_token; pause ;;
+2) lokasi; pause ;;
+3) foto; pause ;;
+0) break ;;
+esac
+
+done
+}
+
+# ===== ADMIN =====
+admin(){
+
+check_token || { echo "❌ Token salah"; pause; return; }
+
+while true; do
+banner
+echo "🔐 ADMIN PANEL"
+echo "1. Lokasi"
+echo "2. Foto"
+echo "3. Alarm"
+echo "4. Boost"
+echo "0. Back"
+
+read -p "Pilih: " a
+
+case "$a" in
+1) lokasi; pause ;;
+2) foto; pause ;;
+3) alarm ;;
+4) boost; pause ;;
 0) break ;;
 esac
 
@@ -104,15 +152,19 @@ done
 # ===== MAIN =====
 while true; do
 banner
-echo "1. 📱 Mode Perangkat (Client)"
+echo "1. 📱 Client"
 echo "2. 🔐 Admin Panel"
+echo "3. 🎮 App Launcher"
+echo "4. 🤖 AI Chat"
 echo "0. Exit"
 
 read -p "Pilih: " m
 
 case "$m" in
-1) client_mode ;;
-2) admin_panel ;;
+1) client ;;
+2) admin ;;
+3) menu_app ;;
+4) ai_chat ;;
 0) exit ;;
 *) echo "❌ salah"; sleep 1 ;;
 esac
