@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Control System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: linear-gradient(135deg,#1e3c72,#2a5298);
+  color: white;
+  padding: 20px;
+}
+h1 { font-size: 30px; }
+button {
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: #00ffcc;
+  color: black;
+  font-size: 16px;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🤖 AI CONTROL SYSTEM</h1>
+<p>Tool Termux Multifungsi</p>
+
+<h3>🔥 Fitur:</h3>
+<p>AI • Booster • Launcher • Tracking • Admin Panel</p>
+
+<button onclick="copyInstall()">📥 Install Sekarang</button>
+
+<p id="copyText"></p>
+
+<script>
+function copyInstall() {
+  const text = "pkg update -y && pkg install curl -y && bash <(curl -s https://raw.githubusercontent.com/ksiagian34-png/Kels/main/install-online.sh)";
+  navigator.clipboard.writeText(text);
+  document.getElementById("copyText").innerText = "✔ Command disalin!";
+}
+</script>
+
+</body>
+</html>
