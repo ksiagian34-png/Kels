@@ -9,8 +9,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #1e3c72;
-  background: linear-gradient(to bottom, #2a5298, #1e3c72);
+  background: #2f4f88;
   color: white;
   text-align: center;
 }
@@ -23,24 +22,21 @@ h1 {
   font-size: 28px;
 }
 
-button {
-  margin-top: 20px;
+.btn {
+  background: #00e0b8;
+  color: black;
   padding: 15px 25px;
+  border-radius: 10px;
   font-size: 18px;
   border: none;
-  border-radius: 10px;
-  background: #00e6a8;
-  color: black;
   cursor: pointer;
-}
-
-button:hover {
-  background: #00c896;
+  margin-top: 20px;
 }
 
 .note {
   margin-top: 15px;
-  color: #ddd;
+  font-size: 14px;
+  opacity: 0.8;
 }
 </style>
 </head>
@@ -48,23 +44,29 @@ button:hover {
 <body>
 
 <div class="container">
-  <h1>🤖 AI CONTROL SYSTEM</h1>
-  <p>Tool Termux Multifungsi</p>
 
-  <h3>🔥 Fitur:</h3>
-  <p>AI • Booster • Launcher • Tracking • Admin Panel</p>
+<h1>🤖 AI CONTROL SYSTEM</h1>
+<p>Tool Termux Multifungsi</p>
 
-  <button onclick="install()">📦 Install Sekarang</button>
+<p>🔥 Fitur:</p>
+<p>AI • Booster • Launcher • Tracking • Admin Panel</p>
 
-  <p class="note" id="status">✔ Siap digunakan</p>
+<button class="btn" onclick="install()">📥 Install Sekarang</button>
+
+<p class="note" id="status">✔ Siap digunakan</p>
+
+<p style="opacity:0.6;font-size:12px;">Version 2 • Updated</p>
+
 </div>
 
 <script>
 function install() {
   const cmd = "pkg update -y && pkg install curl -y && bash <(curl -s https://raw.githubusercontent.com/ksiagian34-png/Kels/main/install-online.sh)";
-  
+
   navigator.clipboard.writeText(cmd).then(() => {
-    document.getElementById("status").innerText = "✔ Command disalin! Buka Termux lalu paste.";
+    document.getElementById("status").innerText = "✔ Command disalin!";
+  }).catch(() => {
+    document.getElementById("status").innerText = "❌ Gagal copy, copy manual!";
   });
 
   // buka Termux (opsional)
