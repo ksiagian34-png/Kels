@@ -1,19 +1,17 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-echo "🚀 Installing AI Control System..."
+clear
+echo "=============================="
+echo " AI CONTROL SYSTEM INSTALLER"
+echo "=============================="
 
-pkg update -y
+pkg update -y && pkg upgrade -y
 pkg install git -y
 
-cd ~
-rm -rf Kels
+echo "[+] Cloning project..."
+git clone https://github.com/ksiagian34-png/Kels
 
-git clone https://github.com/ksiagian34-png/Kels.git
 cd Kels
 
-chmod +x pro.sh install.sh
-
-echo "✅ Install selesai"
-echo "Menjalankan AI System..."
-
-bash pro.sh
+echo "[+] Running system..."
+bash main.sh
